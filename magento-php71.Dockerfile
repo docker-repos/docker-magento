@@ -58,5 +58,5 @@ RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["init"]
 
-# docker build -t fgct/magento:latest.1 . -f ./Dockerfile
+# docker build -t fgct/magento:php7.1 . -f ./Dockerfile
 # docker run -it --name=fgc_magento fgct/magento:php7.1 /bin/bash
