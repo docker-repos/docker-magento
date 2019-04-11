@@ -8,6 +8,10 @@ ENV INSTALL_DIR /var/www/html
 
 RUN chsh -s /bin/bash www-data
 RUN echo "www-data:password" | chpasswd
+
+COPY src/phpinfo.php $INSTALL_DIR/index.php
+COPY src/phpinfo.php $INSTALL_DIR/info.php
+
 RUN chown -R www-data:www-data $INSTALL_DIR
 
 RUN mkdir -p /root/.ssh
