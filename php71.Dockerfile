@@ -38,6 +38,9 @@ RUN echo "\nxdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-
 
 RUN echo "memory_limit=1024M" > /usr/local/etc/php/conf.d/memory-limit.ini
 
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
+
 RUN bash -c 'bash < <(curl -s -L https://raw.github.com/colinmollenhour/modman/master/modman-installer)'
 RUN mv ~/bin/modman /usr/local/bin
 
