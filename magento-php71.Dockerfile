@@ -7,6 +7,9 @@ RUN a2enmod headers
 
 ENV INSTALL_DIR /var/www/html
 
+RUN docker-php-ext-install soap
+RUN docker-php-ext-install zip
+
 RUN su www-data -c "cd /tmp && \
     curl https://codeload.github.com/OpenMage/magento-mirror/tar.gz/$MAGENTO_VERSION -o $MAGENTO_VERSION.tar.gz && \
     tar xvf $MAGENTO_VERSION.tar.gz && \
@@ -39,4 +42,5 @@ EXPOSE 80 22
 CMD ["init"]
 
 # docker build -t fgct/magento:php7.1 . -f ./magento-php71.Dockerfile
+# docker push fgct/magento:php7.1
 # docker run -it --name=fgc_magento fgct/magento:php7.1 /bin/bash

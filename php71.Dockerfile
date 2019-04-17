@@ -25,7 +25,7 @@ RUN chown www-data:www-data /home/www-data/.ssh/authorized_keys
 
 RUN apt-get update && \
     apt-get install -y sudo mysql-client-5.7 libxml2-dev libmcrypt4 libmcrypt-dev libpng-dev libjpeg-dev libfreetype6 libfreetype6-dev
-RUN docker-php-ext-install soap
+
 RUN docker-php-ext-install intl
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mcrypt
@@ -55,5 +55,6 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["init"]
 
 # docker build -t fgct/php:7.1 . -f ./php71.Dockerfile
+# docker push fgct/php:7.1
 # docker run -it --rm --name=fgc_php71 -p 32222:22 fgct/php:7.1 /bin/bash
 # ssh root@localhost -p 32222 -i private.pem
