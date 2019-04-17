@@ -7,8 +7,13 @@ RUN a2enmod headers
 
 ENV INSTALL_DIR /var/www/html
 
+RUN apt-get update && \
+    apt-get install -y libxslt-dev
+
 RUN docker-php-ext-install soap
 RUN docker-php-ext-install zip
+RUN docker-php-ext-install bcmath # M2
+RUN docker-php-ext-install xsl # M2
 
 RUN su www-data -c "cd /tmp && \
     curl https://codeload.github.com/OpenMage/magento-mirror/tar.gz/$MAGENTO_VERSION -o $MAGENTO_VERSION.tar.gz && \
