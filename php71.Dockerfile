@@ -1,11 +1,12 @@
 FROM quay.io/alexcheng1982/apache2-php7:7.1.24
 
-ENV MAGENTO_VERSION 1.9.3.8
+ENV PHP_VERSION 7.1.24
 
 RUN a2enmod rewrite
 
 ENV INSTALL_DIR /var/www/html
 
+RUN usermod -aG sudo www-data
 RUN chsh -s /bin/bash www-data
 RUN echo "www-data:password" | chpasswd
 
@@ -23,8 +24,9 @@ RUN cat /private.pem.pub >> /home/www-data/.ssh/authorized_keys
 RUN chown www-data:www-data /home/www-data/.ssh/authorized_keys
 
 RUN apt-get update && \
-    apt-get install -y mysql-client-5.7 libxml2-dev libmcrypt4 libmcrypt-dev libpng-dev libjpeg-dev libfreetype6 libfreetype6-dev
+    apt-get install -y sudo mysql-client-5.7 libxml2-dev libmcrypt4 libmcrypt-dev libpng-dev libjpeg-dev libfreetype6 libfreetype6-dev
 RUN docker-php-ext-install soap
+RUN docker-php-ext-install intl
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mcrypt
 RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/lib/ --with-freetype-dir=/usr/lib/ && \

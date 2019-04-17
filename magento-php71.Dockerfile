@@ -3,9 +3,11 @@ FROM quay.io/alexcheng1982/apache2-php7:7.1.24
 ENV MAGENTO_VERSION 1.9.3.8
 
 RUN a2enmod rewrite
+RUN a2enmod headers
 
 ENV INSTALL_DIR /var/www/html
 
+RUN usermod -aG sudo www-data
 RUN chsh -s /bin/bash www-data
 RUN echo "www-data:password" | chpasswd
 RUN chown -R www-data:www-data $INSTALL_DIR
@@ -22,8 +24,9 @@ RUN su www-data -c "cd /tmp && \
 RUN chown -R 777 $INSTALL_DIR/media $INSTALL_DIR/var
 
 RUN apt-get update && \
-    apt-get install -y mysql-client-5.7 libxml2-dev libmcrypt4 libmcrypt-dev libpng-dev libjpeg-dev libfreetype6 libfreetype6-dev
+    apt-get install -y sudo mysql-client-5.7 libxml2-dev libmcrypt4 libmcrypt-dev libpng-dev libjpeg-dev libfreetype6 libfreetype6-dev
 RUN docker-php-ext-install soap
+RUN docker-php-ext-install intl
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install mcrypt
 RUN docker-php-ext-configure gd --with-jpeg-dir=/usr/lib/ --with-freetype-dir=/usr/lib/ && \
@@ -58,5 +61,5 @@ RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["init"]
 
-# docker build -t fgct/magento:php7.1 . -f ./Dockerfile
+# docker build -t fgct/magento:php7.1 . -f ./magento-php71.Dockerfile
 # docker run -it --name=fgc_magento fgct/magento:php7.1 /bin/bash
