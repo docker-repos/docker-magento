@@ -23,7 +23,7 @@ RUN su www-data -c "cd /tmp && \
 # RUN chown -R www-data:www-data $INSTALL_DIR # take too long
 RUN chown -R 777 $INSTALL_DIR/media $INSTALL_DIR/var
 
-RUN echo "memory_limit=1024M" > /usr/local/etc/php/conf.d/memory-limit.ini
+RUN echo "memory_limit=1024M" >> /usr/local/etc/php/conf.d/memory-limit.ini
 
 COPY ./bin/install-magento /usr/local/bin/install-magento
 RUN chmod +x /usr/local/bin/install-magento
@@ -40,11 +40,6 @@ RUN chmod +x /usr/local/bin/install-sampledata
 WORKDIR $INSTALL_DIR
 
 EXPOSE 80 22
-
-#COPY docker-entrypoint.sh /
-#RUN chmod +x /docker-entrypoint.sh
-#ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["init"]
 
 # docker build -t fgct/magento:php7.1 . -f ./magento-php71.Dockerfile
 # docker push fgct/magento:php7.1
